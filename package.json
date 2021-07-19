@@ -1,0 +1,35 @@
+{
+  "name": "a.f.a.p.",
+  "version": "0.0.1",
+  "description": "A little game...",
+  "main": "index.html",
+  "scripts": {
+    "start": "gulp",
+    "serve": "gulp serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "Viktor Uhryn",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "devDependencies": {
+    "browser-sync": "~2.27.4",
+    "del": "~6.0.0",
+    "gulp": "~4.0.2",
+    "gulp-closure-compiler": "^0.4.0",
+    "gulp-concat": "~2.6.1",
+    "gulp-inject": "~5.0.5",
+    "gulp-size": "~4.0.1",
+    "gulp-terser": "^2.0.1",
+    "gulp-watch": "~5.0.1",
+    "gulp-zip": "~5.1.0"
+  }
+}
