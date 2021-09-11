@@ -1,11 +1,14 @@
 const MAX_SPEED = [3, 4, 5, 6];
-const MAX_STAMINA = [150, 170, 250, 300];
+const MAX_STAMINA = [150, 150, 200, 250];
 const MAX_HEALTH = [150, 170, 250, 300];
 
 window.character = (() => {
   const MASS = .9;
   const OUT_STAMINA_AT_WALL = 1;
   const JUMP = 12;
+  const CLIMBING_SPEED = 2;
+
+  let lastSavedPosition;
 
   let currentLevel = 0;
   let health = MAX_HEALTH[currentLevel];
@@ -152,10 +155,14 @@ window.character = (() => {
   return {
     i: () => {
       position = map.getStart().get();
+      lastSavedPosition = position.get();
+    },
+    savePosition: () => {
+      lastSavedPosition = position.get();
     },
     reset: () => {
       velocity = new V();
-      position = map.getCharacterStart().get();
+      position = lastSavedPosition.get() || map.getStart().get();
       stamina = MAX_STAMINA[currentLevel];
       characterAnimations.mirror(position.x !== 0);
       die = {
@@ -232,7 +239,7 @@ window.character = (() => {
               stamina -= OUT_STAMINA_AT_WALL;
 
               if (control.pressed[0]) {
-                velocity = new V(0, 3);
+                velocity = new V(0, CLIMBING_SPEED);
                 characterAnimations.to('climb', false);
               } else {
                 characterAnimations.to('wall');
@@ -252,7 +259,7 @@ window.character = (() => {
               stamina -= OUT_STAMINA_AT_WALL;
 
               if (control.pressed[0]) {
-                velocity = new V(0, 3);
+                velocity = new V(0, CLIMBING_SPEED);
                 characterAnimations.to('climb', false);
               } else {
                 characterAnimations.to('wall');
