@@ -1,9 +1,9 @@
 window.keys = (() => {
   const list = [
-    new Key(25, 20, 20, true),
-    new Key(26, 60, 20, true),
-    new Key(27, 100, 20, true),
-    new Key(28, 140, 20, true)
+    new Key(25, 20, 30, true),
+    new Key(26, 70, 30, true),
+    new Key(27, 120, 30, true),
+    new Key(28, 170, 30, true)
   ];
   const hash = {};
 

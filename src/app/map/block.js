@@ -395,7 +395,7 @@ function Block(type, x, y, w, h, d) {
       c.translate(-20, -this.h - 4);
       for (let i = 0; i < Math.floor(this.w / 40); i++) {
         c.translate(40, 0);
-        draw.r(nails, [40, 8]);
+        draw.r(nails, [40, 8], 1);
       }
       c.restore();
       // BOTTOM
@@ -403,7 +403,7 @@ function Block(type, x, y, w, h, d) {
       c.translate(-20, -4);
       for (let i = 0; i < Math.floor(this.w / 40); i++) {
         c.translate(40, 0);
-        draw.r(nails, [40, 8]);
+        draw.r(nails, [40, 8], 1);
       }
       c.restore();
       // RIGHT
@@ -412,7 +412,7 @@ function Block(type, x, y, w, h, d) {
       c.translate(-20, -this.w - 4);
       for (let i = 0; i < Math.floor(this.h / 40); i++) {
         c.translate(40, 0);
-        draw.r(nails, [40, 8]);
+        draw.r(nails, [40, 8], 1);
       }
       c.restore();
       // LEFT
@@ -421,7 +421,7 @@ function Block(type, x, y, w, h, d) {
       c.translate(-this.h - 20, -4);
       for (let i = 0; i < Math.floor(this.h / 40); i++) {
         c.translate(40, 0);
-        draw.r(nails, [40, 8]);
+        draw.r(nails, [40, 8], 1);
       }
       c.restore();
       c.fillStyle = color.black;

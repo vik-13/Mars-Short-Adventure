@@ -11,7 +11,7 @@ window.character = (() => {
   let lastSavedPosition;
 
   let currentLevel = 0;
-  let health = MAX_HEALTH[currentLevel];
+  let health = 10;
   let stamina = MAX_STAMINA[currentLevel];
 
   let secondJumpAllowed = false;
@@ -23,7 +23,7 @@ window.character = (() => {
   let isGoingBack = false;
   let velocity = new V();
   let position;
-  const size = {x: 38, y: 73};
+  const size = {x: 35, y: 73};
   let jump = {
     first: true,
     second: false,
@@ -176,9 +176,10 @@ window.character = (() => {
     },
     n: () => {
       if (die.dying) {
+        if (velocity.y > 0) velocity.y = 0;
         characterAnimations.to('die', false, true);
         const acc = velocity.get().normalize().mult(-0.017);
-        acc.add(gc.gravity.get().mult(MASS / 2));
+        acc.add(gc.gravity.get().mult(MASS / 10));
         velocity.add(acc);
         position.add(velocity);
         return false;
@@ -348,6 +349,10 @@ window.character = (() => {
     },
     center: () => {
       return position.get().add(new V(size.x / 2, size.y / 2));
+    },
+    restore: (amount) => {
+      health += amount;
+      if (health > MAX_HEALTH[currentLevel]) health = MAX_HEALTH[currentLevel];
     },
     position: () => position,
     isDead: () => die.isDead,

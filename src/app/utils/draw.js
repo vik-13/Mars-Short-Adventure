@@ -10,7 +10,7 @@ window.draw = (() => {
 				bp();
 				c.fillStyle = color[p[2]] || p[2] || t;
 				c.strokeStyle = '#000';
-				c.lineWidth = 5;
+				c.lineWidth = width ? width : 5;
 				c.lineJoin = 'round';
 				m(p[0][0], p[0][1]);
 				for(let i = 2; i < p[0].length; i = i + 2) {
