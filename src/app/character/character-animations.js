@@ -102,7 +102,7 @@ window.characterAnimations = (() => {
       let s = scale || 1;
       c.translate(position.x + (size[0] / 2), position.y + (size[1] / 2));
       c.scale( mirrored ? -s : s, -s);
-      draw.r(current.n(), size, 5);
+      draw.r(current.n(), size, 3);
       if (isBlocked && current.isFinished()) {
         next();
       }

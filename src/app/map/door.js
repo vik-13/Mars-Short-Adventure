@@ -17,8 +17,13 @@ function Door(type, x, y) {
   }
 
   this.n = () => {
-    if (new V(this.x, this.y).distance(character.position()) < 200 && keys.has(type + 4)) {
-      this.shift += 2;
+    const distance = new V(this.x + this.w / 2, this.y + this.h / 2).distance(character.center());
+    if (distance < 200) {
+      if (keys.has(type + 4)) {
+        this.shift += 2;
+      } else {
+        messages.show('You need a ' + colors[type - 21].toUpperCase() + ' key...', 1000);
+      }
     } else {
       this.shift -= 2;
     }

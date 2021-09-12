@@ -11,7 +11,7 @@ window.character = (() => {
   let lastSavedPosition;
 
   let currentLevel = 0;
-  let health = 10;
+  let health = MAX_HEALTH[currentLevel];
   let stamina = MAX_STAMINA[currentLevel];
 
   let secondJumpAllowed = false;
@@ -32,6 +32,7 @@ window.character = (() => {
   let inAir = false;
   let isRelaxing = false;
   let isSitting = false;
+  let isMirrored = false;
 
   function collision(position) {
     const collisionInfo = {
@@ -191,9 +192,11 @@ window.character = (() => {
       if (control.pressed[3]) {
         acc.add(new V(-1, 0));
         characterAnimations.mirror(true);
+        isMirrored = true;
       } else if (control.pressed[1]) {
         acc.add(new V(1, 0));
         characterAnimations.mirror(false);
+        isMirrored = false;
       }
 
       velocity.add(acc);
@@ -233,7 +236,7 @@ window.character = (() => {
         if (item.side === 1) {
           position.x = item.intersect;
           if (item.climbing) {
-            if (control.pressed[3] && stamina > 0 && collisionResult.sides.indexOf(0) === -1) {
+            if (control.pressed[3] && stamina > 0 && collisionResult.sides.indexOf(0) === -1 && currentLevel > 1) {
               velocity = item.velocity;
 
               particles.addWall(position, -1);
@@ -254,7 +257,7 @@ window.character = (() => {
         if (item.side === 3) {
           position.x = item.intersect;
           if (item.climbing) {
-            if (control.pressed[1] && stamina > 0 && collisionResult.sides.indexOf(0) === -1) {
+            if (control.pressed[1] && stamina > 0 && collisionResult.sides.indexOf(0) === -1 && currentLevel > 1) {
               velocity = item.velocity;
               particles.addWall(position, 1);
               stamina -= OUT_STAMINA_AT_WALL;
@@ -327,6 +330,10 @@ window.character = (() => {
           jump.second = true;
         }
       }
+
+      if (collisionResult.sides.indexOf(2) !== -1 && collisionResult.sides.indexOf(0) !== -1) {
+        toDie();
+      }
     },
     nSplashScreen: () => {
 
@@ -357,6 +364,7 @@ window.character = (() => {
     position: () => position,
     isDead: () => die.isDead,
     isSitting: () => isSitting,
+    isMirrored: () => isMirrored,
     health: () => health,
     stamina: () => stamina,
     maxHealth: () => MAX_HEALTH[currentLevel],

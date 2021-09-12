@@ -341,7 +341,7 @@ function Block(type, x, y, w, h, d) {
 
   const colors = [color.black, color.black, color.ice, color.black];
   const nails = [[[0,8,40,8,35,0,34,6,23,1,21,5,15,7,11,1,8,6,3,1],'black','black',1]];
-  const gHolder = [[[12,0,0,22,11,40,40,36,40,4],'','black',1],[[19,16,16,20,19,24,24,23,26,17],'','mechanics',1]];
+  const gHolder = [[[11,0,0,18,23,20],"#000000","black",1],[[10,11,13,11,11,13],"#000000","#388e3c",1]];
   const speed = 2;
 
   let original = new V(x, y);
@@ -368,13 +368,13 @@ function Block(type, x, y, w, h, d) {
       // Holder 1
       c.save();
       c.translate(original.x + (w / 2), original.y + (h / 2));
-      draw.r(gHolder, [40, 40]);
+      draw.r(gHolder, [23, 20], 1);
       c.restore();
 
       // Holder 2
       c.save();
       c.translate(original.x + d.x + (w / 2), original.y + d.y + (h / 2));
-      draw.r(gHolder, [40, 40]);
+      draw.r(gHolder, [23, 20]);
       c.restore();
 
       // Line
@@ -427,8 +427,13 @@ function Block(type, x, y, w, h, d) {
       c.fillStyle = color.black;
       c.fillRect(0, 0, this.w, this.h);
     } else {
+      bp();
+      c.strokeStyle = color.black;
       c.fillStyle = colors[this.type];
-      c.fillRect(0, 0, this.w, this.h);
+      c.rect(0, 0, this.w, this.h);
+      c.stroke();
+      c.fill();
+      cp();
     }
     c.restore();
   }

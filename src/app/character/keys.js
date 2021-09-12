@@ -18,7 +18,7 @@ window.keys = (() => {
       list.forEach((key) => {
         bp();
         if (!hash[key.type]) {
-          c.globalAlpha = .1;
+          c.globalAlpha = .3;
         } else {
           c.globalAlpha = 1;
         }

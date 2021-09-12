@@ -71,6 +71,9 @@ window.scene = (() => {
         bullets.n();
         particles.n();
         camera.n();
+        enemySpit.n();
+
+        messages.n();
       }
     },
     r: () => {
@@ -89,6 +92,7 @@ window.scene = (() => {
         map.r();
         character.r();
         bullets.r();
+        enemySpit.r();
         particles.r();
         c.restore();
 
@@ -98,6 +102,8 @@ window.scene = (() => {
         c.save()
         keys.r();
         c.restore();
+
+        messages.r();
       }
 
       // c.save();
