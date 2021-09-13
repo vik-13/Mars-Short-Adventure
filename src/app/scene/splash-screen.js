@@ -5,7 +5,7 @@ window.splashScreen = (() => {
 		},
 		r: () => {
 			c.save();
-			c.translate(700, 500);
+			c.translate(450, 500);
 			c.scale(1, -1);
 			c.font = '100px Courier New';
 			c.textAlign = 'left';

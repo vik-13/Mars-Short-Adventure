@@ -34,7 +34,7 @@ function compileScripts() {
 
 function compileZip() {
   return src(config.release.index + '/**/*')
-    .pipe(zip('afap.zip'))
+    .pipe(zip('mars-short-adventure.zip'))
     .pipe(dest('./'))
     .pipe(size({pretty: false}));
 }

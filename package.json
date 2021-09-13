@@ -1,7 +1,7 @@
 {
-  "name": "a.f.a.p.",
+  "name": "mars-short-adventure",
   "version": "0.0.1",
-  "description": "A little game...",
+  "description": "A little game for js13k...",
   "main": "index.html",
   "scripts": {
     "start": "gulp",
@@ -12,7 +12,9 @@
     "url": ""
   },
   "keywords": [
-    "game"
+    "game",
+    "mars",
+    "space"
   ],
   "author": "Viktor Uhryn",
   "license": "ISC",

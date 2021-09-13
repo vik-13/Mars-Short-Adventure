@@ -1,13 +1,15 @@
 window.keys = (() => {
-  const list = [
-    new Key(25, 40, 40, true),
-    new Key(26, 90, 40, true),
-    new Key(27, 140, 40, true),
-    new Key(28, 190, 40, true)
-  ];
+  const list = [];
   const hash = {};
 
   return {
+    i: () => {
+      list.length = 0;
+      list.push(new Key(25, 40, 40, true));
+      list.push(new Key(26, 90, 40, true));
+      list.push(new Key(27, 140, 40, true));
+      list.push(new Key(28, 190, 40, true));
+    },
     add: (type) => {
       hash[type] = true;
     },

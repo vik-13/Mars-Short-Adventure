@@ -30,7 +30,7 @@ function SawBlock(type, x, y, w, h, d) {
     }
   ];
   const g = [[[19,0,28,11,27,21,13,17,0,28,12,26,20,34,10,39,7,56,16,45,24,46,22,56,36,68,32,56,39,48,48,58,65,56,53,50,49,40,63,43,76,30,62,33,52,27,64,16,54,0,54,12,41,19,33,4],'black','black',1]];
-  const gHolder = [[[11,0,0,18,23,20],"#000000",color.black,1],[[10,11,13,11,11,13],"#000000",color.mechanics,1]];
+  const gHolder = [[[11,0,0,18,23,20],color.black,color.black,1],[[10,11,13,11,11,13],color.black,color.mechanics,1]];
   const speed = 6;
   let angle = 0;
   let acc = -.015;
@@ -94,8 +94,8 @@ function Block(type, x, y, w, h, d) {
   this.lastDamage = 0;
 
   const colors = [color.black, color.grey, color.ice, color.grey];
-  const nails = [[[0,8,40,8,35,0,34,6,23,1,21,5,15,7,11,1,8,6,3,1],'black','black',1]];
-  const gHolder = [[[11,0,0,18,23,20],"#000000","black",1],[[10,11,13,11,11,13],"#000000","#388e3c",1]];
+  const nails = [[[0,8,40,8,35,0,34,6,23,1,21,5,15,7,11,1,8,6,3,1],color.black,color.black,1]];
+  const gHolder = [[[11,0,0,18,23,20],color.black,color.black,1],[[10,11,13,11,11,13],color.black,color.mechanics,1]];
   const speed = 2;
 
   let original = new V(x, y);

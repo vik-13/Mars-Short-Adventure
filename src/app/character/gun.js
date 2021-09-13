@@ -46,7 +46,7 @@ function Bullet(position, direction, time, level) {
     if (+new Date() - start > time) this.active = false;
 
     map.getMap().enemy.forEach((item) => {
-      if (this.position.distance(item.center()) <= item.radius()) {
+      if (item.active && this.position.distance(item.center()) <= item.radius()) {
         item.damage(BULLETS_DAMAGE[level]);
         this.active = false;
       }

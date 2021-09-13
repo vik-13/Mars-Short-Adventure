@@ -31,7 +31,7 @@ function Enemy1(x, y, d) {
     fire.start = +new Date();
     anim = new Anim(g, animList.spit, 200, true);
 
-    enemySpit.add(0, new V(x + size[0] / 2, y + size[1] / 2), new V(-inverse * 5, 0));
+    enemySpit.add(0, new V(x + size[0] / 2, y + size[1] / 2), new V(-inverse * 6, 0));
 
     fire.last = +new Date();
   }
@@ -58,13 +58,17 @@ function Enemy1(x, y, d) {
     return new V(x + size[0] / 2, y + size[1] / 2);
   }
 
+  this.makeActive = function() {
+    this.active = true;
+    maxHealth += 30;
+    health = maxHealth;
+    fire.started = false;
+    anim = new Anim(g, animList.walk, 200);
+  }
+
   this.n = function() {
     if (!this.active && +new Date() - deadTime > 20000) {
-      this.active = true;
-      maxHealth += 30;
-      health = maxHealth;
-      fire.started = false;
-      anim = new Anim(g, animList.walk, 200);
+      this.makeActive();
       return;
     }
     if (!this.active) return;
@@ -124,7 +128,9 @@ function Enemy2(x, y, d) {
     started: false,
     start: +new Date()
   };
-  let health = 150;
+  let maxHealth = 150;
+  let health = maxHealth;
+  let deadTime = 0;
 
   function doFire() {
     if (+new Date() - fire.last < FIRE_INTERVAL) return;
@@ -142,7 +148,10 @@ function Enemy2(x, y, d) {
 
   this.damage = function(value) {
     health -= value;
-    if (health <= 0) this.active = false;
+    if (health <= 0) {
+      this.active = false;
+      deadTime = +new Date();
+    }
 
     if (inverse === 1 && character.center().x > x || inverse === -1 && character.center().x < x) {
       direction *= -1;
@@ -159,7 +168,20 @@ function Enemy2(x, y, d) {
     return new V(x + size[0] / 2, y + size[1] / 2);
   }
 
+  this.makeActive = function() {
+    this.active = true;
+    maxHealth += 30;
+    health = maxHealth;
+    fire.started = false;
+    anim = new Anim(g, animList.walk, 200);
+  }
+
   this.n = function() {
+    if (!this.active && +new Date() - deadTime > 20000) {
+      this.makeActive();
+      return;
+    }
+    if (!this.active) return;
     if (fire.started) {
       if (+new Date() - fire.start >= 300) {
         fire.started = false;

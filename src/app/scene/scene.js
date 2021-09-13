@@ -4,9 +4,9 @@ window.scene = (() => {
   function rHealth() {
     c.save();
     bp();
-    c.strokeStyle = '#000';
-    c.fillStyle = '#fff';
-    c.lineWidth = 5;
+    c.strokeStyle = color.black;
+    c.fillStyle = color.white;
+    c.lineWidth = 3;
     c.lineJoin = 'round';
     const maxHealth = character.maxHealth();
     c.rect(20, gc.res.y - 40, maxHealth, 20);
@@ -14,7 +14,7 @@ window.scene = (() => {
     c.stroke();
     cp();
     bp();
-    c.fillStyle = 'red';
+    c.fillStyle = color.health;
     const health = character.health();
     c.rect(22, gc.res.y - 38, health - 4 < 0 ? 0 : health - 4, 16);
     c.fill();
@@ -25,9 +25,9 @@ window.scene = (() => {
   function rStamina() {
     c.save();
     bp();
-    c.strokeStyle = '#000';
-    c.fillStyle = '#fff';
-    c.lineWidth = 5;
+    c.strokeStyle = color.black;
+    c.fillStyle = color.white;
+    c.lineWidth = 3;
     c.lineJoin = 'round';
     const maxStamina = character.maxStamina();
     c.rect(gc.res.x - maxStamina - 20, gc.res.y - 40, maxStamina, 20);
@@ -35,7 +35,7 @@ window.scene = (() => {
     c.stroke();
     cp();
     bp();
-    c.fillStyle = 'green';
+    c.fillStyle = color.stamina;
     const stamina = character.stamina();
     c.rect(gc.res.x - maxStamina - 18 + (maxStamina - stamina), gc.res.y - 38, stamina - 4 < 0 ? 0 : stamina - 4, 16);
     c.fill();
@@ -55,7 +55,7 @@ window.scene = (() => {
     c.save();
     c.translate(gc.res.x - 150, 40);
     c.scale(1, -1);
-    draw.r([[[0,9,13,10,16,0,20,10,32,8,22,15,28,26,18,20,8,27,11,17],"#000000","#388e3c",1]], [32, 27], 3);
+    draw.r([[[0,9,13,10,16,0,20,10,32,8,22,15,28,26,18,20,8,27,11,17],color.black,color.bonus,1]], [32, 27], 3);
     bp();
     c.translate(30, 0);
     c.textBaseline = 'middle';
@@ -75,6 +75,7 @@ window.scene = (() => {
       map.i();
       character.i();
       camera.i();
+      keys.i();
     },
     reset: () => {
       background.reset();
@@ -107,6 +108,17 @@ window.scene = (() => {
 
       c.save();
       camera.r();
+
+      bp();
+      c.fillStyle = '#BFAEA4';
+      c.fillRect(-5000, 0,20000, 6000);
+      cp();
+
+      bp();
+      c.fillStyle = '#776F5C';
+      c.fillRect(-5000, -5000,20000, 5000);
+      cp();
+
       splashScreen.r();
       map.r();
       character.r();
@@ -125,16 +137,6 @@ window.scene = (() => {
       rStars();
 
       messages.r();
-
-      // c.save();
-      // c.translate(1250, 690);
-      // c.scale(.3, .3);
-      // if (gc.muted) {
-      //   draw.r([[[0,23,0,59,30,59,55,75,55,0,30,24],'','white',1]], [55, 75]);
-      // } else {
-      //   draw.r([[[0,27,0,64,30,63,55,80,55,4,30,28],'','white',1],[[59,28,60,57,65,57,64,28],'','white',1],[[66,18,67,64,71,64,71,19],'','white',1],[[73,8,75,72,80,72,79,8],'','white',1],[[83,0,84,81,89,81,87,0],'','white',1]], [89, 81]);
-      // }
-      // c.restore();
     }
   };
 })();
