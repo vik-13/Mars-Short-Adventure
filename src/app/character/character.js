@@ -1,11 +1,11 @@
 const MAX_SPEED = [3, 4, 5, 6];
 const MAX_STAMINA = [150, 150, 200, 250];
 const MAX_HEALTH = [150, 170, 250, 300];
+const JUMP = [12, 12, 13, 14];
 
 window.character = (() => {
   const MASS = .9;
-  const OUT_STAMINA_AT_WALL = 1;
-  const JUMP = 12;
+  const OUT_STAMINA_AT_WALL = 1.2;
   const CLIMBING_SPEED = 2;
 
   let lastSavedPosition;
@@ -270,7 +270,7 @@ window.character = (() => {
 
         if (control.pressed[0]) {
           if (jump.first) {
-            velocity.add(new V(0, JUMP));
+            velocity.add(new V(0, JUMP[currentLevel]));
             characterAnimations.to('jump', false, true);
             jump.first = false;
           }
@@ -297,7 +297,7 @@ window.character = (() => {
         }
 
         if (control.pressed[0] && (jump.second || jump.first) && secondJumpAllowed) {
-          velocity.apply(new V(0, JUMP));
+          velocity.apply(new V(0, JUMP[currentLevel]));
           characterAnimations.to('jump', false, true);
           jump.first = false;
           jump.second = false;
@@ -309,7 +309,11 @@ window.character = (() => {
         }
       }
 
-      if (collisionResult.sides.indexOf(2) !== -1 && collisionResult.sides.indexOf(0) !== -1) {
+      if (!control.pressed[0] && velocity.y > 0) {
+        velocity.y /= 1.2;
+      }
+
+      if (collisionResult.sides.length === 2 && collisionResult.sides.indexOf(2) !== -1 && collisionResult.sides.indexOf(0) !== -1) {
         toDie();
       }
     },

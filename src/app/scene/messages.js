@@ -31,7 +31,7 @@ window.messages = (() => {
       c.translate(gc.res.x / 2, 75);
       c.scale(1, -1);
       c.fillStyle = color.black;
-      c.font = '32px serif';
+      c.font = '32px Courier New';
       c.textAlign = 'center';
       c.textBaseline = 'middle';
       c.fillText(message, 0, 0);

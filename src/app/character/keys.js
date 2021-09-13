@@ -19,7 +19,7 @@ window.keys = (() => {
       bp();
       c.globalAlpha = .5;
       c.fillStyle = color.white;
-      c.rect(20, 20, 214, 66);
+      c.rect(30, 20, 210, 66);
       c.fill();
       cp();
       c.restore();

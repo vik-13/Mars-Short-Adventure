@@ -1,5 +1,5 @@
 const DURATIONS = [2000];
-const DAMAGE = [45, 50];
+const DAMAGE = [70, 90];
 
 function Spit(type, position, direction) {
   this.active = true;

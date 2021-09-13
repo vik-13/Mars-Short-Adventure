@@ -48,7 +48,7 @@ window.scene = (() => {
     bp();
     c.globalAlpha = .5;
     c.fillStyle = color.white;
-    c.rect(gc.res.x - 170, 20, 150, 40);
+    c.rect(gc.res.x - 175, 20, 150, 40);
     c.fill();
     cp();
     c.restore();
@@ -59,8 +59,8 @@ window.scene = (() => {
     bp();
     c.translate(30, 0);
     c.textBaseline = 'middle';
-    c.font = '30px serif';
-    c.fillText(gc.stars + ' / ' + gc.starsTotal, 0, 0);
+    c.font = '30px Courier New';
+    c.fillText(gc.stars + '/' + gc.starsTotal, 0, 0);
     cp();
     c.restore();
   }
@@ -104,31 +104,27 @@ window.scene = (() => {
       c.fillRect(0, 0, gc.res.x, gc.res.y);
       c.restore();
 
-      if (gc.splashScreen) {
-        splashScreen.r();
-      } else {
-        // background.r();
 
-        c.save();
-        camera.r();
-        map.r();
-        character.r();
-        bullets.r();
-        enemySpit.r();
-        particles.r();
-        c.restore();
+      c.save();
+      camera.r();
+      splashScreen.r();
+      map.r();
+      character.r();
+      bullets.r();
+      enemySpit.r();
+      particles.r();
+      c.restore();
 
-        rHealth();
-        rStamina();
+      rHealth();
+      rStamina();
 
-        c.save()
-        keys.r();
-        c.restore();
+      c.save()
+      keys.r();
+      c.restore();
 
-        rStars();
+      rStars();
 
-        messages.r();
-      }
+      messages.r();
 
       // c.save();
       // c.translate(1250, 690);

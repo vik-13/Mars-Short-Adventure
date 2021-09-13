@@ -19,7 +19,7 @@ window.bullets = (() => {
   return {
     upgrade: () => {
       currentLevel++;
-      if (currentLevel > 3) currentLevel = 3;
+      messages.show('Your fun is better now...', 5000);
     },
     n: () => {
       if (control.pressed[4] && list.length < BULLETS_COUNT[currentLevel] && +new Date() - last >= INTERVAL) add();

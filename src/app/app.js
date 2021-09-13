@@ -49,6 +49,8 @@
     document.addEventListener('paste', (event) => {
       map.setMap(JSON.parse(event.clipboardData.getData('text/plain')));
       event.preventDefault();
+      gc.stars = 0;
+      gc.starsTotal = 0;
       map.i();
       character.savePosition(map.getStart());
       reset();

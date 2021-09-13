@@ -1,6 +1,6 @@
 function Enemy1(x, y, d) {
   this.active = true;
-  const FIRE_INTERVAL = 2000;
+  const FIRE_INTERVAL = 1400;
   const size = [81, 37];
   const g = [[[56,37,81,36,71,11],"#000000","black",1],[[73,34,63,11,47,36],"#000000","black",1],[[31,34,50,12,59,36],"#000000","black",1],[[49,33,33,9,18,37],"#000000","black",1],[[33,16,11,0,0,35,30,33],"#000000","black",1],[[13,11,11,15,16,15,16,12],"#000000","red",1]];
   const speed = 1;
@@ -20,7 +20,9 @@ function Enemy1(x, y, d) {
     started: false,
     start: +new Date()
   };
+  let maxHealth = 50;
   let health = 50;
+  let deadTime = 0;
 
   function doFire() {
     if (+new Date() - fire.last < FIRE_INTERVAL) return;
@@ -36,17 +38,20 @@ function Enemy1(x, y, d) {
 
   this.damage = function(value) {
     health -= value;
-    if (health <= 0) this.active = false;
+    if (health <= 0) {
+      this.active = false;
+      deadTime = +new Date();
+    }
 
     if (inverse === 1 && character.center().x > x || inverse === -1 && character.center().x < x) {
       direction *= -1;
       inverse *= -1;
-      fire.last = +new Date() - 1800;
+      fire.last = +new Date() - 1300;
     }
   }
 
   this.radius = function() {
-    return 10;
+    return 15;
   }
 
   this.center = function() {
@@ -54,6 +59,15 @@ function Enemy1(x, y, d) {
   }
 
   this.n = function() {
+    if (!this.active && +new Date() - deadTime > 20000) {
+      this.active = true;
+      maxHealth += 30;
+      health = maxHealth;
+      fire.started = false;
+      anim = new Anim(g, animList.walk, 200);
+      return;
+    }
+    if (!this.active) return;
     if (fire.started) {
       if (+new Date() - fire.start >= 300) {
         fire.started = false;
@@ -78,6 +92,7 @@ function Enemy1(x, y, d) {
   }
 
   this.r = function() {
+    if (!this.active) return;
     c.save();
     c.translate(x + size[0] / 2, y + size[1] / 2 - 4);
     c.scale(inverse, -1);
@@ -89,7 +104,7 @@ function Enemy1(x, y, d) {
 
 function Enemy2(x, y, d) {
   this.active = true;
-  const FIRE_INTERVAL = 2000;
+  const FIRE_INTERVAL = 1200;
   const size = [53, 125];
   const g = [[[3,124,53,125,27,87],"#000000","black",1],[[5,103,50,98,16,59],"#000000","black",1],[[6,69,45,73,33,33],"#000000","black",1],[[11,42,53,32,41,0,0,0],"#000000","black",1],[[9,6,9,14,20,13,18,4],"#000000","red",1]];
   const speed = 1;
@@ -109,7 +124,7 @@ function Enemy2(x, y, d) {
     started: false,
     start: +new Date()
   };
-  let health = 100;
+  let health = 150;
 
   function doFire() {
     if (+new Date() - fire.last < FIRE_INTERVAL) return;
@@ -132,7 +147,7 @@ function Enemy2(x, y, d) {
     if (inverse === 1 && character.center().x > x || inverse === -1 && character.center().x < x) {
       direction *= -1;
       inverse *= -1;
-      fire.last = +new Date() - 1800;
+      fire.last = +new Date() - 1100;
     }
   }
 
@@ -169,6 +184,7 @@ function Enemy2(x, y, d) {
   }
 
   this.r = function() {
+    if (!this.active) return;
     c.save();
     c.translate(x + size[0] / 2, y + size[1] / 2 - 4);
     c.scale(inverse, -1);
