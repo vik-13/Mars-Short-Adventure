@@ -1,5 +1,5 @@
-# A.F.A.P. (As Fast As Possible)
+# MARS: Short Adventure
 
 ## Small game created for `js13k`
 
-How fast are you? Is it enough or...
+It's going to be really challenging to find all stars...
