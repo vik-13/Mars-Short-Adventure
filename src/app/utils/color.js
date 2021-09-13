@@ -6,6 +6,7 @@ window.color = {
   dying3: 'hsl(15, 85%, 10%)',
   dying4: 'hsl(15, 85%, 30%)',
   black: '#141212',
+  grey: '#565565',
   ice: '#0678BF',
   stamina: '#023609',
   power: 'yellow',

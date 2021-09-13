@@ -15,6 +15,7 @@ function Checkpoint(x, y) {
       anim = new Anim(g, a, 1500, true);
       character.savePosition();
       lastUpdate = +new Date();
+      messages.show('CHECKPOINT', 5000);
     }
   }
 

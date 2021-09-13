@@ -10,6 +10,8 @@
     splashScreen: false,
     graphicsQuality: 1,
     muted: true,
+    stars: 0,
+    starsTotal: 0,
     changeQuality: (value) => {
       gc.graphicsQuality = value;
       changeCanvasSize();
@@ -42,6 +44,14 @@
     gc.canvas.addEventListener('click', (e) => {
       if (gc.splashScreen) gc.splashScreen = false;
       gc.ac = window.AudioContext ? new AudioContext() : new window.webkitAudioContext();
+    });
+
+    document.addEventListener('paste', (event) => {
+      map.setMap(JSON.parse(event.clipboardData.getData('text/plain')));
+      event.preventDefault();
+      map.i();
+      character.savePosition(map.getStart());
+      reset();
     });
   }
 

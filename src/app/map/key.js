@@ -29,7 +29,7 @@ function Key(type, x, y, staticKey) {
 
   this.r = () => {
     c.save();
-    c.translate(this.x + (this.w / 2) + 3.5, this.y + (this.h / 2) + this.shift);
+    c.translate(this.x + (this.w / 2) + 10, this.y + (this.h / 2) + this.shift);
     if (staticKey) c.scale(2, -2);
     draw.r(anim.n(), [this.w, this.h], 1);
     c.restore();

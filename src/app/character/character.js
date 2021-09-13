@@ -77,30 +77,8 @@ window.character = (() => {
       }
     });
 
-    map.getMap().enemy.forEach((block) => {
-      if (block.type === 8) {
-        if (position.x + (size.x / 2) > block.x && position.x + (size.x / 2) < block.x + 120 && position.y >= block.y - 10) {
-          const distance = position.y - block.y;
-          if (distance < (400)) {
-            velocity.add(new V(0, 3 * (1 - distance / 400)));
-            characterAnimations.to('flying');
-          }
-          collisionInfo.isOverFan = true;
-        }
-      } else if (block.type === 3) {
-        if (block.active && block.center().distance(position.get().add(new V(size.x / 2, size.y / 2))) < block.collisionRadius + 20) {
-          jump.done = false;
-          stamina = MAX_STAMINA[currentLevel];
-          block.destroy();
-        }
-      } else {
-        if (block.center().distance(position.get().add(new V(size.x / 2, size.y / 2))) < block.collisionRadius + 20) {
-          toDie();
-        }
-      }
-    });
-
     map.getMap().map.forEach((block) => {
+      if (block.type === 5) return;
       if (block.active && position.x + size.x > block.x && position.x < block.x + block.w && position.y < block.y + block.h && position.y + size.y > block.y) {
         const coords = [
           block.y + block.h,
@@ -117,18 +95,25 @@ window.character = (() => {
 
         const side = distances.indexOf(Math.min(...distances));
 
+        if (block.type === 3 && side !== 0) return;
+
+        if (block.type === 1 && +new Date() - block.lastDamage > 2000) {
+          if (velocity.y > 0) {
+            velocity.y = 0;
+          }
+          character.damage(70);
+          block.lastDamage = +new Date();
+        }
+
         collisionInfo.sides.push(side);
         collisionInfo.touches.push({
           side: side,
           type: block.type,
           intersect: coords[side],
           velocity: block.getVelocity(),
-          climbing: true
+          climbing: true,
+          block: block
         });
-
-        if (block.type === 4) {
-          block.startFalling();
-        }
       }
     });
 
@@ -158,12 +143,13 @@ window.character = (() => {
       position = map.getStart().get();
       lastSavedPosition = position.get();
     },
-    savePosition: () => {
-      lastSavedPosition = position.get();
+    savePosition: (p) => {
+      lastSavedPosition = p || position.get();
     },
     reset: () => {
       velocity = new V();
       position = lastSavedPosition.get() || map.getStart().get();
+      health = MAX_HEALTH[currentLevel];
       stamina = MAX_STAMINA[currentLevel];
       characterAnimations.mirror(position.x !== 0);
       die = {
@@ -180,7 +166,7 @@ window.character = (() => {
         if (velocity.y > 0) velocity.y = 0;
         characterAnimations.to('die', false, true);
         const acc = velocity.get().normalize().mult(-0.017);
-        acc.add(gc.gravity.get().mult(MASS / 10));
+        acc.add(gc.gravity.get().mult(MASS / 2));
         velocity.add(acc);
         position.add(velocity);
         return false;
@@ -206,14 +192,6 @@ window.character = (() => {
       const collisionResult = collision(position);
 
       collisionResult.touches.forEach((item) => {
-        if (item.type === 1) {
-          if (velocity.y > 0) {
-            velocity.y = 0;
-          }
-          toDie();
-          return;
-        }
-
         if (item.side === 0 && velocity.y <= 0) {
           stamina += 5;
           if (stamina > MAX_STAMINA[currentLevel]) stamina = MAX_STAMINA[currentLevel];
@@ -338,11 +316,20 @@ window.character = (() => {
     nSplashScreen: () => {
 
     },
+    damage: (value) => {
+      health -= value;
+      if (health < 0) {
+        toDie();
+      } else {
+        particles.dying(position, [color.dying1, color.dying2, color.dying3, color.dying4]);
+      }
+    },
     upgrade: () => {
       currentLevel++;
       if (currentLevel > 3) currentLevel = 3;
       health = MAX_HEALTH[currentLevel];
       stamina = MAX_STAMINA[currentLevel];
+      messages.show('You are stronger now...', 5000);
     },
     r: () => {
       c.save();

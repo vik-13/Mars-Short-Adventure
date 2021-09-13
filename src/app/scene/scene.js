@@ -43,6 +43,28 @@ window.scene = (() => {
     c.restore();
   }
 
+  function rStars() {
+    c.save();
+    bp();
+    c.globalAlpha = .5;
+    c.fillStyle = color.white;
+    c.rect(gc.res.x - 170, 20, 150, 40);
+    c.fill();
+    cp();
+    c.restore();
+    c.save();
+    c.translate(gc.res.x - 150, 40);
+    c.scale(1, -1);
+    draw.r([[[0,9,13,10,16,0,20,10,32,8,22,15,28,26,18,20,8,27,11,17],"#000000","#388e3c",1]], [32, 27], 3);
+    bp();
+    c.translate(30, 0);
+    c.textBaseline = 'middle';
+    c.font = '30px serif';
+    c.fillText(gc.stars + ' / ' + gc.starsTotal, 0, 0);
+    cp();
+    c.restore();
+  }
+
   return {
     i: () => {
       bg = c.createLinearGradient(0, 0, 0, gc.res.y);
@@ -102,6 +124,8 @@ window.scene = (() => {
         c.save()
         keys.r();
         c.restore();
+
+        rStars();
 
         messages.r();
       }

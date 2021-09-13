@@ -1,4 +1,5 @@
-const DURATIONS = [500];
+const DURATIONS = [2000];
+const DAMAGE = [45, 50];
 
 function Spit(type, position, direction) {
   this.active = true;
@@ -6,8 +7,16 @@ function Spit(type, position, direction) {
   this.start = +new Date();
 
   this.n = function() {
-    console.log(direction);
     position.add(direction);
+
+    if (position.distance(character.center()) < 30) {
+      character.damage(DAMAGE[type]);
+      this.active = false;
+    }
+
+    if (+new Date() - this.start > DURATIONS[type]) {
+      this.active = false;
+    }
   }
 
   this.r = function() {

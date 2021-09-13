@@ -1,9 +1,9 @@
 window.keys = (() => {
   const list = [
-    new Key(25, 20, 30, true),
-    new Key(26, 70, 30, true),
-    new Key(27, 120, 30, true),
-    new Key(28, 170, 30, true)
+    new Key(25, 40, 40, true),
+    new Key(26, 90, 40, true),
+    new Key(27, 140, 40, true),
+    new Key(28, 190, 40, true)
   ];
   const hash = {};
 
@@ -15,6 +15,14 @@ window.keys = (() => {
       return hash[type];
     },
     r: () => {
+      c.save();
+      bp();
+      c.globalAlpha = .5;
+      c.fillStyle = color.white;
+      c.rect(20, 20, 214, 66);
+      c.fill();
+      cp();
+      c.restore();
       list.forEach((key) => {
         bp();
         if (!hash[key.type]) {

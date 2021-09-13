@@ -1,6 +1,7 @@
 const BULLETS_TIMES = [500, 550, 650, 800];
 const BULLETS_SPEED = [8, 9, 11, 13];
 const BULLETS_COUNT = [1, 2, 3, 4];
+const BULLETS_DAMAGE = [35, 45, 65, 100];
 
 window.bullets = (() => {
   const INTERVAL = 300;
@@ -11,7 +12,7 @@ window.bullets = (() => {
   function add() {
     const direction = new V(characterAnimations.direction() * BULLETS_SPEED[currentLevel], 0);
     const position = character.position().get().add(new V(direction.x < 0 ? -20 : 40, character.isSitting() ? 18 : 36));
-    list.push(new Bullet(position, direction, BULLETS_TIMES[currentLevel]));
+    list.push(new Bullet(position, direction, BULLETS_TIMES[currentLevel], currentLevel));
     last = +new Date();
   }
 
@@ -35,7 +36,7 @@ window.bullets = (() => {
   };
 })();
 
-function Bullet(position, direction, time) {
+function Bullet(position, direction, time, level) {
   const start = +new Date();
   this.active = true;
   this.position = position;
@@ -43,6 +44,13 @@ function Bullet(position, direction, time) {
   this.n = function() {
     this.position.add(direction);
     if (+new Date() - start > time) this.active = false;
+
+    map.getMap().enemy.forEach((item) => {
+      if (this.position.distance(item.center()) <= item.radius()) {
+        item.damage(BULLETS_DAMAGE[level]);
+        this.active = false;
+      }
+    });
   }
 
   this.r = function() {
